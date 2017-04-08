@@ -1,0 +1,5 @@
+[
+  {"_Id": 1, "description": "Camcorder", "type": "AVRecoder"},
+  {"_Id": 2, "description": "Canon Photo", "type": "Camera"},
+  {"_Id": 3, "description": "Zoom", "type": "AudioRecorder"}
+]

@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  div.mdl-grid
+    div.mdl-cell.mdl-cell--12-col
+      h1= title
+      h2= "Verfügbare Geräte"
+    div.mdl-cell.mdl.cell--1-col
+      ul(class="mdl-list")
+         li(class="mdl-list__item")
+            span(class="mdl-list__item-primary-content")= "Camera"
+            span(class="mdl-list__item-secondary-action")
+               label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", for="checkbox1")
+                input#checkbox1.mdl-checkbox.mdl-checkbox__input(type="checkbox", checked=true, disabled=false)

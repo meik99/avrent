@@ -1,0 +1,5 @@
+[
+  {"_ID": 1, "firstname":"Michael", "lastname": "Rynkiewicz", "class": "5CHIF"},
+  {"_ID": 2, "firstname":"Joris", "lastname": "Stoff", "class": "5BHIF"},
+  {"_ID": 3, "firstname":"Julian", "lastname": "Bieringer", "class": "5AHIF"}
+]
