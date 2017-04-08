@@ -6,8 +6,8 @@ block content
       h1= title
       h2= "Verfügbare Geräte"
     div.mdl-cell.mdl.cell--1-col
-      each item in equipment
-        ul(class="mdl-list")
+      ul(class="mdl-list")
+        each item in equipment
            li(class="mdl-list__item")
               span(class="mdl-list__item-primary-content")= item.description
               span(class="mdl-list__item-secondary-action")
