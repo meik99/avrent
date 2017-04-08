@@ -6,9 +6,10 @@ block content
       h1= title
       h2= "Verfügbare Geräte"
     div.mdl-cell.mdl.cell--1-col
-      ul(class="mdl-list")
-         li(class="mdl-list__item")
-            span(class="mdl-list__item-primary-content")= "Camera"
-            span(class="mdl-list__item-secondary-action")
-               label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", for="checkbox1")
-                input#checkbox1.mdl-checkbox.mdl-checkbox__input(type="checkbox", checked=true, disabled=false)
+      each item in equipment
+        ul(class="mdl-list")
+           li(class="mdl-list__item")
+              span(class="mdl-list__item-primary-content")= item.description
+              span(class="mdl-list__item-secondary-action")
+                 label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", for=item.id)
+                  input.mdl-checkbox.mdl-checkbox__input(id=item.id, type="checkbox", checked=false, disabled=false)
