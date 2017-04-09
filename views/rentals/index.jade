@@ -1,0 +1,16 @@
+extends ../layout
+
+
+block content
+    div.mdl-grid
+        div.mdl-cell.mdl-cell--12-col
+            ul.mdl-list
+                each item in types
+                    li.mdl-list__item(style="padding-right: 30px;")
+                        span.mdl-list__item-primary-content.mdl-badge(data-badge=item.count)
+                            span= item.type
+                        span.mdl-list__item-secondary-action
+                            label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for=item.type)
+                                input(id=item.type, type="checkbox", class="mdl-switch__input", checked=true)
+
+

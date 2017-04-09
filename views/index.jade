@@ -1,15 +1,55 @@
 extends layout
 
 block content
-  div.mdl-grid
-    div.mdl-cell.mdl-cell--12-col
-      h1= title
-      h2= "Verfügbare Geräte"
-    div.mdl-cell.mdl.cell--1-col
-      ul(class="mdl-list")
-        each item in equipment
-           li(class="mdl-list__item")
-              span(class="mdl-list__item-primary-content")= item.description
-              span(class="mdl-list__item-secondary-action")
-                 label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", for=item.id)
-                  input.mdl-checkbox.mdl-checkbox__input(id=item.id, type="checkbox", checked=false, disabled=false)
+    div.mdl-grid
+        div.mdl-cell.mdl-cell--12-col
+            h4= "Derzeit Verliehen"
+            div
+                div.mdl-textfield.mdl-js-textfield(style="min-width: 100%")
+                    input.mdl-textfield__input(type="text", id="search")
+                    label.mdl-textfield__label(for="search")= "Suchen"
+            hr
+            div.mdl-cell.mdl-cell--12-col.mdl-layout--large-screen-only
+                div(style="margin-bottom: 5px")
+                    a(href="/rentals/add")
+                        button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--raised.mdl-button--accent(style="min-width: 100%")= "Neue Verleihung"
+                table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp
+                    thead
+                        tr
+                            th= "Gerät Nummer"
+                            th= "Gerät"
+                            th= "Schüler"
+                            th= "Klasse"
+                            th= "Datum"
+
+                        each rental in rentals
+                            each item in equipments
+                                if(item.id == rental.equipmentId)
+                                    td= item.id
+                                    td= item.description
+                            td= rental.pupil
+                            td= rental._class
+                            td= moment(new Date(rental.date)).format("YYYY-MM-DD")
+                            td
+                                button.mdl-button.mdl-js-button.mdl-button--icon(id=rental.equipmentId)
+                                    i.material-icons= "more_vert"
+                                ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for=rental.equipmentId)
+                                    li.mdl-menu__item= "Bearbeiten"
+                                    li.mdl-menu__item= "Löschen"
+
+            div.mdl-cell.mdl-cell--12-col.mdl-layout--small-screen-only
+                div(style="margin-bottom: 5px")
+                    button.mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--raised.mdl-button--accent(style="min-width: 100%")= "Neue Verleihung"
+                each rental in rentals
+                    div.mdl-card.mdl-shadow--2dp
+                        div.mdl-card__supporting-text
+                            ul.mdl-list
+                                each item in equipments
+                                    if(item.id == rental.equipmentId)
+                                        li.mdl-list__item= "Gerät: " + item.description + " " + item.id
+                                li.mdl-list__item= "Schüler: " + rental.pupil
+                                li.mdl-list__item= "Klasse: " + rental._class
+                                li.mdl-list__item= "Datum: " + moment(new Date(rental.date)).format("YYYY-MM-DD")
+                        div.mdl-card__actions.mdl-card--border
+                            a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Bearbeiten"
+                            a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Löschen"
