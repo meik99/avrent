@@ -25,6 +25,14 @@ router.get("/add", function (req, res) {
         }
     }
 
+    types = types.sort(function (a, b) {
+       return a.type.localeCompare(b.type);
+    });
+
+    equipment = equipment.sort(function (a, b) {
+       return a.description.localeCompare(b.description);
+    });
+
     res.render("rentals/index", {equipment: equipment, types: types});
 });
 
