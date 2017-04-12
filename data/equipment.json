@@ -1,7 +1,8 @@
 [
-  {"id": 1, "description": "Camcorder", "type": "AVRecoder"},
-  {"id": 2, "description": "Canon Photo", "type": "Camera"},
-  {"id": 3, "description": "Zoom", "type": "Audio Recorder"},
-  {"id": 4, "description": "Zoom", "type": "Audio Recorder"},
-  {"id": 5, "description": "Zoom", "type": "Audio Recorder"}
+  {"id": "A 01"},
+  {"id": "A 02"},
+  {"id": "F 01"},
+  {"id": "F 02"},
+  {"id": "V 01"},
+  {"id": "V 02"}
 ]

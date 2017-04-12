@@ -4,13 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var orm = require("orm");
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var equipment = require("./routes/equipment")
 var rentals = require("./routes/rentals")
+var database = require("./database")(orm);
 
 var app = express();
+
+app.use(orm.express(database.connection_url, database.definitions));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

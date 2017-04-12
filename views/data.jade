@@ -1,0 +1,59 @@
+div.mdl-cell.mdl-cell--6-col.mdl-layout--large-screen-only
+    table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp(style="min-width: 40%")
+        thead
+            tr
+                th= "Gerät"
+                th= "Schüler"
+                th= "Klasse"
+                th= "Verleihdatum"
+        tbody
+            each e in equipments
+                tr
+                    td= e.id
+                    td= e.borrowed.name
+                    td= e.borrowed.clazz
+                    if(e.borrowed.date_from > -1)
+                        td
+                            p= "Von: " + moment(new Date(e.borrowed.date_from)).format("YYYY-MM-DD")
+                            p= "Bis: " + moment(new Date(e.borrowed.date_to)).format("YYYY-MM-DD")
+                    else
+                        td
+                            p= "Von: -"
+                            p= "Bis: -"
+                    td
+                        button.mdl-button.mdl-js-button.mdl-button--icon(id=e.id)
+                            i.material-icons= "more_vert"
+                        ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for=e.id)
+                            if(e.borrowed.date_from <= -1)
+                                li.mdl-menu__item= "Verleihen"
+                            else
+                                li.mdl-menu__item= "Zurückerhalten"
+                            li.mdl-menu__item= "Bearbeiten"
+                            li.mdl-menu__item= "Löschen"
+
+div.mdl-cell.mdl-cell--12-col.mdl-layout--small-screen-only
+    each e in equipments
+        div.mdl-cell.mdl-cell--5-col
+            div.mdl-card.mdl-shadow--2dp
+                div.mdl-card__supporting-text
+                    ul.mdl-list
+                        li.mdl-list__item= "Gerät: " + e.id
+                        li.mdl-list__item= "Schüler: " + e.borrowed.name
+                        li.mdl-list__item= "Klasse: " + e.borrowed.clazz
+                        if(e.borrowed.date_from > -1)
+                            li.mdl-list__item= "Verleihdatum"
+                            li.mdl-list__item.padding-right= "Von:" + moment(new Date(e.borrowed.date_from)).format("YYYY-MM-DD")
+                            li.mdl-list__item.padding-right= "Bis:" + moment(new Date(e.borrowed.date_to)).format("YYYY-MM-DD")
+                        else
+                            li.mdl-list__item
+                                span.mdl-list__item-primary-content
+                                    p= "Verleihdatum: "
+                                    p= "Von: -"
+                                    p= "Bis: -"
+                div.mdl-card__actions.mdl-card--border
+                    if(e.borrowed.date_from <= -1)
+                        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
+                    else
+                        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Zurückerhalten"
+                    a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Bearbeiten"
+                    a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Löschen"

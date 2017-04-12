@@ -1,7 +1,8 @@
 [
-  {"equipmentId" : 1,
+  {"equipmentId" : "A 01",
    "pupil": "Max Mustermann",
     "_class": "4CHIF",
-    "date": 1491763418000
+    "date_from": 1491763418000,
+    "date_to": 1491864418000
   }
 ]
