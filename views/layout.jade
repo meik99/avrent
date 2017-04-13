@@ -16,13 +16,15 @@ html
         header.mdl-layout__header
 
             div.mdl-layout__header-row
-                span.mdl-layout-title= "AVRent"
+                span.mdl-layout-title
+                    a(href="/", style="color: white; text-decoration: none")= "AVRent"
                 nav.mdl-navigation.mdl-layout--large-screen-only
-                    //a.mdl-navigation__link(href="#")= "Home"
+                    a.mdl-navigation__link(href="/equipment")= "Geräte verwalten"
                 div.mdl-layout-spacer
 
         div.mdl-layout__drawer.mdl-layout--small-screen-only
-            span.mdl-layout-title= "AVRent"
+            span.mdl-layout-title
+                a(href="/", style="color: white; text-decoration: none")= "AVRent"
             nav.mdl-navigation
                 //a.mdl-navigation__link(href="#")= "Home"
 
