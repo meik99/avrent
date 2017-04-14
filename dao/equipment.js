@@ -8,7 +8,7 @@ module.exports = function () {
         equipment.find({}, function (err, devices) {
             function nextDevice(idx) {
                 result.push({
-                    id: devices[idx].id,
+                    id: devices[idx].name,
                     borrowed: {
                         name: "Archiv",
                         clazz: "-",
@@ -17,14 +17,14 @@ module.exports = function () {
                     }
                 });
 
-                rental.find({equipmentId: devices[idx].id}, {limit: 1}, function (index) {
+                rental.find({equipmentName: devices[idx].name}, {limit: 1}, function (index) {
                     const i = index;
                     return function (err, rentals) {
                         if (err) console.log(err);
                         if (rentals.length >= 1) {
                             result[i].borrowed = {
                                 name: rentals[0].pupil,
-                                clazz: rentals[0].clazzId,
+                                clazz: rentals[0].clazzName,
                                 date_from: rentals[0].date_from,
                                 date_to: rentals[0].date_to
                             };

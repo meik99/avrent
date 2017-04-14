@@ -31,9 +31,9 @@ module.exports = function(orm){
                 models.rental = db.define("rental", rental.variables, rental.options);
 
                 var rentalEquipment =
-                    models.rental.hasOne("equipment", models.equipment, {field: "equipmentId"});
+                    models.rental.hasOne("equipment", models.equipment, {field: "equipmentName"});
                 var rentalClazz =
-                    models.rental.hasOne("clazz", models.clazz, {field: "clazzId"});
+                    models.rental.hasOne("clazz", models.clazz, {field: "clazzName"});
 
                 db.drop(function (err) {
                     if (err) console.log(err);
@@ -41,55 +41,55 @@ module.exports = function(orm){
                         if (err2) console.log(err2);
 
                         models.equipment.create({
-                            id: "A 01"
+                            name: "A 01"
                         }, function () {
                             
                         });
                         models.equipment.create({
-                            id: "A 02"
+                            name: "A 02"
                         }, function () {
                             
                         });
                         models.equipment.create({
-                            id: "V 01"
+                            name: "V 01"
                         }, function () {
 
                         });
                         models.equipment.create({
-                            id: "V 02"
+                            name: "V 02"
                         }, function () {
 
                         });
                         models.equipment.create({
-                            id: "F 01"
+                            name: "F 01"
                         }, function () {
 
                         });
                         models.equipment.create({
-                            id: "F 02"
+                            name: "F 02"
                         }, function () {
 
                         });
 
                         models.clazz.create({
-                            id: "3CHIF"
+                            name: "3CHIF"
                         }, function () {
 
                         });
                         models.clazz.create({
-                            id: "4CHIF"
+                            name: "4CHIF"
                         }, function () {
 
                         });
                         models.clazz.create({
-                            id: "5CHIF"
+                            name: "5CHIF"
                         }, function () {
 
                         });
 
                         models.rental.create({
-                            equipmentId: "F 01",
-                            clazzId: "3CHIF",
+                            equipmentName: "F 01",
+                            clazzName: "3CHIF",
                             pupil: "Max Mustermann",
                             date_from: new Date(),
                             date_to: new Date(new Date().getTime() + 800000000)
@@ -97,8 +97,8 @@ module.exports = function(orm){
                             if(err) console.log(err);
                         });
                         models.rental.create({
-                            equipmentId: "A 01",
-                            clazzId: "5CHIF",
+                            equipmentName: "A 01",
+                            clazzName: "5CHIF",
                             pupil: "Maxine Musterfrau",
                             date_from: new Date(),
                             date_to: new Date(new Date().getTime() + 800000000)

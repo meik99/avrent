@@ -3,22 +3,84 @@ extends ../layout
 block content
     div.mdl-grid
         div.mdl-cell.mdl-cell--12-col
-            h4= "Gerät hinzufügen"
-        div.mdl-cell.mdl-cell--2-col
-            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-                input#equipmentId.mdl-textfield__input(type="text")
+            h4= "Geräte verwalten"
+        div.mdl-cell.mdl-cell--2-col.mdl-cell--3-col-phone
+            div#equipmentIdDiv.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#equipmentId.mdl-textfield__input(type="text", onkeyup="equipmentIdChanged()")
                 label.mdl-textfield__label(for="equipmentId")= "Geräte ID"
-        div.mdl-cell.mdl-cell--1-col
-            button.mdl-button.mdl-js-button.mdl-button--accent.mdl-button--raised= "Hinzufügen"
-        div.mdl-cell.mdl-cell--9-col.mdl-layout--large-screen-only
+        div.mdl-cell.mdl-cell--2-col-desktop.mdl-cell--3-col-tablet.mdl-cell--3-col-phone
+            button#btnEquipment.mdl-button.mdl-js-button.mdl-button--accent.mdl-button--raised= "Hinzufügen"
+        div.mdl-cell.mdl-cell--8-col-desktop.mdl-cell--8-col-tablet.mdl-cell--3-col-phone
             table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp
                 thead
                     tr
                         th= "Gerätename"
                 tbody
                     each item in equipment
-                        tr
+                        tr(onclick="setEquipment('" + item.id + "')")
                             td= item.id
-                            if(item.borrowed.date_from <= -1)
-                                td
-                                    button.mdl-button.mdl-js-button.mdl-button--accent= "Löschen"
+                            td
+                                if(item.borrowed.date_from <= -1)
+                                    button.mdl-button.mdl-js-button.mdl-button--accent(onclick="deleteEquipment('" + item.id + "')")= "Löschen"
+                                else
+                                    button.mdl-button.mdl-js-button.mdl-button--accent(disabled=true)= "Derzeit Verliehen"
+    script.
+        var oldId = "";
+        $("#equipmentId").on("input", equipmentIdChanged);
+        $("#equipmentId").val("");
+
+        function setEquipment(itemId) {
+            $("#equipmentId").val(itemId);
+            oldId = itemId;
+            $("#equipmentIdDiv").addClass("is-dirty");
+            $("#btnEquipment").text("Umbenennen");
+        }
+
+        function equipmentIdChanged() {
+            var text = $("#equipmentId").val();
+
+            if(text.length <= 0){
+                $("#btnEquipment").text("Hinzufügen");
+            }
+        }
+
+        function reloadOrError(data){
+            if (data.error) alert(data.error);
+            else
+                location.reload();
+        }
+
+        function deleteEquipment(itemId) {
+            $.ajax(
+                {
+                    method: "DELETE",
+                    url: "/equipment",
+                    data: {
+                        id: itemId
+                    }
+                }
+            ).done(reloadOrError);
+        }
+
+        $("#btnEquipment").on("click", function () {
+            var id = $("#btnEquipment").val();
+            if($("#btnEquipment").value === "Hinzufügen"){
+                $.ajax({
+                    method: "POST",
+                    url: "/equipment",
+                    data: {
+                        id: id
+                    }
+                }).done(reloadOrError);
+            }else{
+                $.ajax({
+                    method: "PUT",
+                    url: "/equipment",
+                    data: {
+                        id: id,
+                        oldId: oldId
+                    }
+                }).done(reloadOrError);
+            }
+        });
+

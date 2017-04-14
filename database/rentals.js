@@ -1,8 +1,8 @@
 module.exports = function(orm){
     var description= {
         variables: {
-            equipmentId: {type: "text"},
-            clazzId: {type: "text"},
+            equipmentName: {type: "text"},
+            clazzName: {type: "text"},
             pupil: {type: "text"},
             date_from: {type: "date"},
             date_to: {type: "date"}

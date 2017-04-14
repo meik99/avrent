@@ -15,4 +15,16 @@ router.get('/', function(req, res, next) {
         });
 });
 
+router.post("/", function (req, res) {
+   var id = req.body.id;
+
+   if(id){
+       req.models.equipment.find({id: id}, {}, function (err, results) {
+          if(results.length > 0){
+              res.send({error: "Gerät mit dieser Id bereits vorhanden!"})
+          }
+       });
+   }
+});
+
 module.exports = router;

@@ -1,6 +1,6 @@
 module.exports = {
     variables: {
-        id: {type: "text", key: true}
+        name: {type: "text"}
     },
     options: {
         methods: {},
