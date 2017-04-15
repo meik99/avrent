@@ -63,8 +63,8 @@ block content
         }
 
         $("#btnEquipment").on("click", function () {
-            var id = $("#btnEquipment").val();
-            if($("#btnEquipment").value === "Hinzufügen"){
+            var id = $("#equipmentId").val();
+            if($("#btnEquipment").text() === "Hinzufügen"){
                 $.ajax({
                     method: "POST",
                     url: "/equipment",
