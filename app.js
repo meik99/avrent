@@ -8,8 +8,9 @@ var orm = require("orm");
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var equipment = require("./routes/equipment")
-var rentals = require("./routes/rentals")
+var equipment = require("./routes/equipment");
+var rentals = require("./routes/rentals");
+var clazz = require("./routes/clazz");
 var database = require("./database")(orm);
 
 var app = express();
@@ -32,6 +33,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/equipment', equipment);
 app.use('/rentals', rentals);
+app.use("/class", clazz);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
