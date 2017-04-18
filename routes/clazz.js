@@ -3,7 +3,13 @@ var router = express.Router();
 
 
 router.get("/", function (req, res) {
-    res.render("clazz/index", {});
+    req.models.clazz.find({}, function (err, classes) {
+        if(err) console.log(err);
+
+        res.render("clazz/index", {
+            classes: classes
+        });
+    });
 });
 
 module.exports = router;

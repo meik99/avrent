@@ -3,3 +3,19 @@ extends ../layout
 block content
     div.mdl-grid
         div.mdl-cell.mdl-cell--12-col
+            h4= "Klassen verwalten"
+        div.mdl-cell.mdl-cell--3-col
+            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#clazzName.mdl-textfield__input(type="text")
+                label.mdl-textfield__label(for="clazzName")= "Klassenname"
+
+            button.mdl-button.mdl-js-button.mdl-button--accent.mdl-button--raised.mdl-js-ripple-effect= "Hinzufügen"
+        div.mdl-cell.mdl-cell--9-col
+            table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp
+                thead
+                    tr
+                        th= "Klassenname"
+                tbody
+                    each clazz in classes
+                        tr
+                            td= clazz.name
