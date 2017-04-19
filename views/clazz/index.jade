@@ -4,18 +4,83 @@ block content
     div.mdl-grid
         div.mdl-cell.mdl-cell--12-col
             h4= "Klassen verwalten"
-        div.mdl-cell.mdl-cell--3-col
-            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-                input#clazzName.mdl-textfield__input(type="text")
-                label.mdl-textfield__label(for="clazzName")= "Klassenname"
-
-            button.mdl-button.mdl-js-button.mdl-button--accent.mdl-button--raised.mdl-js-ripple-effect= "Hinzufügen"
-        div.mdl-cell.mdl-cell--9-col
+        div.mdl-cell.mdl-cell--2-col.mdl-cell--3-col-phone
+            div#clazzIdDiv.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#clazzId.mdl-textfield__input(type="text", onkeyup="clazzIdChanged()")
+                label.mdl-textfield__label(for="clazzId")= "Klasse"
+        div.mdl-cell.mdl-cell--2-col-desktop.mdl-cell--3-col-tablet.mdl-cell--3-col-phone
+            button#btnClazz.mdl-button.mdl-js-button.mdl-button--accent.mdl-button--raised= "Hinzufügen"
+        div.mdl-cell.mdl-cell--8-col-desktop.mdl-cell--8-col-tablet.mdl-cell--3-col-phone
             table.mdl-data-table.mdl-js-data-table.mdl-shadow--2dp
                 thead
                     tr
-                        th= "Klassenname"
+                        th= "Klasse"
                 tbody
-                    each clazz in classes
-                        tr
-                            td= clazz.name
+                    each item in classes
+                        tr(onclick="setClazz('" + item.name + "')")
+                            td= item.name
+                            td
+                                if(item.hasRental === false)
+                                    button.mdl-button.mdl-js-button.mdl-button--accent(onclick="deleteClazz('" + item.name + "')")= "Löschen"
+                                else
+                                    button.mdl-button.mdl-js-button.mdl-button--accent(disabled=true)= "Derzeit Verliehen"
+    script.
+        var oldId = "";
+        $("#clazzId").on("input", clazzIdChanged);
+        $("#clazzId").val("");
+
+        function setClazz(itemId) {
+            $("#clazzId").val(itemId);
+            oldId = itemId;
+            $("#clazzIdDiv").addClass("is-dirty");
+            $("#btnClazz").text("Umbenennen");
+        }
+
+        function clazzIdChanged() {
+            var text = $("#clazzId").val();
+
+            if(text.length <= 0){
+                $("#btnClazz").text("Hinzufügen");
+            }
+        }
+
+        function reloadOrError(data){
+            if (data.error) alert(data.error);
+            else
+                location.reload();
+        }
+
+        function deleteClazz(itemId) {
+            $.ajax(
+                {
+                    method: "DELETE",
+                    url: "/class",
+                    data: {
+                        id: itemId
+                    }
+                }
+            ).done(reloadOrError);
+        }
+
+        $("#btnClazz").on("click", function () {
+            var id = $("#clazzId").val();
+            if($("#btnClazz").text() === "Hinzufügen"){
+                $.ajax({
+                    method: "POST",
+                    url: "/class",
+                    data: {
+                        id: id
+                    }
+                }).done(reloadOrError);
+            }else{
+                $.ajax({
+                    method: "PUT",
+                    url: "/class",
+                    data: {
+                        id: id,
+                        oldId: oldId
+                    }
+                }).done(reloadOrError);
+            }
+        });
+

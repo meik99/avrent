@@ -49,26 +49,46 @@ router.put("/", function (req, res) {
     var oldName = req.body.oldId;
 
     if (name && oldName) {
-        req.models.equipment.find({name: oldName}, function (err, result) {
+        req.models.equipment.find({name: oldName}, function (err, oldEquipment) {
             if (err) console.log(err);
 
-            if (result.length > 1) {
+            if (oldEquipment.length > 1) {
                 res.send({error: "Schwerwiegender Fehler: Mehrere Geräte mit gleicher Id gefunden."})
             }
-            else if (result.length <= 0) {
+            else if (oldEquipment.length <= 0) {
                 res.send({error: "Gewähltes Gerät nicht gefunden"})
             } else {
-                req.models.equipment.find({name: name}, function (err, results) {
+                req.models.equipment.find({name: name}, function (err, newEquipment) {
                     if(err) console.log(err);
 
-                    if (results.length > 0) {
+                    if (newEquipment.length > 0) {
                         res.send({error: "Gerät mit dieser Id bereits vorhanden!"})
                     } else {
-                        result[0].name = name;
-                        result[0].save(function (err) {
+                        oldEquipment[0].name = name;
+                        oldEquipment[0].save(function (err) {
                             if(err) console.log(err);
 
-                            res.send({});
+                            req.models.rental.find({equipmentName: oldName}, function (err, rentals) {
+                               if(err) console.log(err);
+
+                               if(rentals.length > 1){
+                                   console.error("!!!Equipment is with old name: " +
+                                       oldName + " " +
+                                       "and new name: " +
+                                       name +
+                                       " has more than one rental!!!")
+                               }
+                               if(rentals.length > 0){
+                                   rentals[0].equipmentName = name;
+                                   rentals[0].save(function (err) {
+                                       if(err) console.log(err);
+
+                                       res.send({});
+                                   });
+                               }else{
+                                   res.send({});
+                               }
+                            });
                         });
                     }
                 });
