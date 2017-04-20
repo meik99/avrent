@@ -22,7 +22,7 @@ div.mdl-cell.mdl-cell--6-col.mdl-layout--large-screen-only
                             p= "Bis: -"
                     td
                         if(e.borrowed.date_from <= -1)
-                            a(href="/rentals/").mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
+                            a(href="/rentals/" + e.id).mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
                         else
                             a(onclick="removeRental('" + e.id + "')").mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Zurückerhalten"
 

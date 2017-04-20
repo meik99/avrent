@@ -1,3 +1,10 @@
 extends ../layout
 
 block content
+    div.mdl-grid
+        div.mdl-cell.mdl-cell--12-col
+            h4= "Gerät verleihen"
+        div.mdl-cell.mdl-cell--12-col
+            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#equipment(disabled=true, readonly=true, type="text", value="#{equipmentName}").mdl-textfield__input
+                label(for="equipment").mdl-textfield__label= "Gerätename"
