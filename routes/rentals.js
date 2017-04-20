@@ -3,37 +3,33 @@
  */
 var express = require("express");
 var router = express.Router();
-var database = require("../database");
 
 router.get("/", function (req, res) {
-    res.send(database.rental().findAll());
+    res.render("rentals/index");
 });
 
-router.get("/add", function (req, res) {
-    var equipment = database.equipment().findFree();
-    var types = [];
+router.delete("/", function (req, res) {
+    var equipmentName = req.body.equipmentName;
 
-    for(var i = 0; i < equipment.length; i++){
-        var tmpTypes = types.filter(function (item) {
-           return item.type === equipment[i].type;
+    if (equipmentName && typeof equipmentName === typeof "" && equipmentName.length > 0) {
+        req.models.rental.find({equipmentName: equipmentName}, function (err, rentals) {
+            if (err) console.log(err);
+
+            if (rentals.length > 1) {
+                console.error({error: "Rentals have ambiguous equipment!"});
+            }
+            if (rentals.length > 0) {
+                rentals[0].remove(function (err) {
+                    if (err) console.log(err);
+                    res.send({});
+                });
+            }else{
+                res.send({});
+            }
         });
-
-        if(tmpTypes.length <= 0){
-            types.push({type: equipment[i].type, count: 1});
-        }else{
-            tmpTypes[0].count++;
-        }
+    } else {
+        res.send({error: "Ungültige Id"});
     }
-
-    types = types.sort(function (a, b) {
-       return a.type.localeCompare(b.type);
-    });
-
-    equipment = equipment.sort(function (a, b) {
-       return a.description.localeCompare(b.description);
-    });
-
-    res.render("rentals/index", {equipment: equipment, types: types});
 });
 
 module.exports = router;

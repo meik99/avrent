@@ -21,13 +21,10 @@ div.mdl-cell.mdl-cell--6-col.mdl-layout--large-screen-only
                             p= "Von: -"
                             p= "Bis: -"
                     td
-                        button.mdl-button.mdl-js-button.mdl-button--icon(id=e.id)
-                            i.material-icons= "more_vert"
-                        ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for=e.id)
-                            if(e.borrowed.date_from <= -1)
-                                li.mdl-menu__item= "Verleihen"
-                            else
-                                li.mdl-menu__item= "Zurückerhalten"
+                        if(e.borrowed.date_from <= -1)
+                            a(href="/rentals/").mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
+                        else
+                            a(onclick="removeRental('" + e.id + "')").mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Zurückerhalten"
 
 div.mdl-cell.mdl-cell--12-col.mdl-layout--small-screen-only
     each e in equipments
@@ -52,4 +49,24 @@ div.mdl-cell.mdl-cell--12-col.mdl-layout--small-screen-only
                     if(e.borrowed.date_from <= -1)
                         a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
                     else
-                        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Zurückerhalten"
+                        a(onclick="removeRental('" + e.id + "')").mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Zurückerhalten"
+    script.
+        function removeRental(id) {
+            var confirmRemoval = window.confirm("Wollen Sie\n" + id + "\n wirklich entfernen?");
+            if (confirmRemoval === true) {
+                $.ajax({
+                    method: "DELETE",
+                    data: {
+                        equipmentName: id
+                    },
+                    url: "/rentals/"
+                })
+                    .done(function (data) {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            location.reload();
+                        }
+                    });
+            }
+        }

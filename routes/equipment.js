@@ -3,6 +3,20 @@ var router = express.Router();
 
 var equipmentDao = require("../dao/equipment");
 
+router.use(function (req, res, next) {
+   var id = req.body.id;
+   var oldId = req.body.oldId;
+
+   if(id && typeof id === typeof ""){
+       req.body.id = id.toUpperCase();
+   }
+   if(oldId && typeof oldId === typeof ""){
+       req.body.oldId = oldId.toUpperCase();
+   }
+
+   next();
+});
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     equipmentDao.findEquipmentWithRentals(
