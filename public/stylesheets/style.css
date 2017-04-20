@@ -1,3 +1,19 @@
 .padding-right{
     padding-left: 3em;
 }
+
+.dropdown{
+    max-width: 100%;
+    width: 300px;
+    padding: 10px 5px;
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
+.dropdown option{
+    max-width: 100%;
+    width: 300px;
+    margin: 5px 20px;
+    font-size: 16px;
+}

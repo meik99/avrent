@@ -7,4 +7,16 @@ block content
         div.mdl-cell.mdl-cell--12-col
             div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
                 input#equipment(disabled=true, readonly=true, type="text", value="#{equipmentName}").mdl-textfield__input
-                label(for="equipment").mdl-textfield__label= "Gerätename"
+                label(for="equipment").mdl-textfield__label= "Gerät"
+        div.mdl-cell.mdl-cell--12-col
+            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#pupil(type="text").mdl-textfield__input
+                label(for="pupil").mdl-textfield__label= "SchülerIn"
+        div.mdl-cell.mdl-cell--12-col
+            select(name="clazzSelect").dropdown
+                each clazz in classes
+                    option(value="#{clazz.name}")= clazz.name
+        div.mdl-cell.mdl-cell--12-col
+            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#clazz(type="text").mdl-textfield__input
+                label(for="clazz").mdl-textfield__label= "Klasse"

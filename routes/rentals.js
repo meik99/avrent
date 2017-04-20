@@ -7,7 +7,12 @@ var router = express.Router();
 router.get("/:name", function (req, res) {
     var equipmentName = req.params.name;
 
-    res.render("rentals/index", {equipmentName: equipmentName});
+    req.models.clazz.find({}, function (err, classes) {
+        res.render("rentals/index", {
+            equipmentName: equipmentName,
+            classes: classes
+        });
+    });
 });
 
 router.delete("/", function (req, res) {
