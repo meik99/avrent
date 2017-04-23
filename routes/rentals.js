@@ -30,7 +30,7 @@ router.delete("/", function (req, res) {
                     if (err) console.log(err);
                     res.send({});
                 });
-            }else{
+            } else {
                 res.send({});
             }
         });
@@ -38,5 +38,60 @@ router.delete("/", function (req, res) {
         res.send({error: "Ungültige Id"});
     }
 });
+
+router.post("/", function (req, res) {
+    var equipmentName = req.body.equipmentName;
+    var clazzName = req.body.clazzName;
+    var pupilName = req.body.pupilName;
+
+    if (isValidString(equipmentName) &&
+        isValidString(clazzName) &&
+        isValidString(pupilName)
+    ) {
+        req.models.rental.find({equipmentName: equipmentName}, function (err, rental) {
+            if (rental.length > 0) {
+                res.send({error: "Gerät wird bereits verliehen!"});
+            }
+            else {
+                function insertRental() {
+                    req.models.equipment.find({name: equipmentName}, function (err, equipment) {
+                        if (equipment.length <= 0) {
+                            res.send({error: "Gerät existiert nicht!"});
+                        } else {
+                            var dateTo = new Date();
+                            dateTo = dateTo.setTime(dateTo.getTime() + (1000 * 60 * 60 * 24 * 7 * 3));
+                            req.models.rental.create({
+                                equipmentName: equipmentName,
+                                clazzName: clazzName,
+                                pupil: pupilName,
+                                date_from: new Date(),
+                                date_to: new Date(dateTo)
+                            }, function (err) {
+                                if (err) console.log(err);
+                                console.log("inserted");
+                                res.send({});
+                            });
+                        }
+                    });
+                }
+
+                req.models.clazz.find({name: clazzName}, function (err, clazzes) {
+                    if (clazzes.length > 0) {
+                        insertRental();
+                    } else {
+                        req.models.create({name: clazzName}, function (error) {
+                            if (error) console.log(error);
+                            insertRental();
+                        });
+                    }
+                });
+            }
+        });
+    }
+});
+
+function isValidString(param) {
+    return param && typeof param === typeof "" && param.length > 0
+}
 
 module.exports = router;

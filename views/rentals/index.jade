@@ -13,10 +13,43 @@ block content
                 input#pupil(type="text").mdl-textfield__input
                 label(for="pupil").mdl-textfield__label= "SchülerIn"
         div.mdl-cell.mdl-cell--12-col
-            select(name="clazzSelect").dropdown
+            select(id="clazzSelect", onchange="updateClazzname()").dropdown
                 each clazz in classes
                     option(value="#{clazz.name}")= clazz.name
         div.mdl-cell.mdl-cell--12-col
-            div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            div#clazzDiv.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
                 input#clazz(type="text").mdl-textfield__input
                 label(for="clazz").mdl-textfield__label= "Klasse"
+        div.mdl-cell.mdl-cell--12-col
+            button(onclick="rent()").mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent.mdl-button--raised= "Reservieren"
+
+    script.
+        function updateClazzname() {
+            var clazzSelect = document.getElementById("clazzSelect");
+            var name = clazzSelect.options[clazzSelect.selectedIndex].value;
+
+            $("#clazz").val(name);
+            $("#clazzDiv").addClass("is-dirty");
+        }
+
+        function rent() {
+            var equipmentName = $("#equipment").val();
+            var pupilName = $("#pupil").val();
+            var clazzName = $("#clazz").val();
+
+            $.ajax({
+                method: "POST",
+                url: "/rentals/",
+                data:{
+                    equipmentName: equipmentName,
+                    pupilName: pupilName,
+                    clazzName: clazzName
+                }
+            }).done(function (data) {
+                if(data.error){
+                    alert(data.error);
+                }else{
+                    location.href = "/";
+                }
+            });
+        }
