@@ -43,6 +43,7 @@ router.post("/", function (req, res) {
     var equipmentName = req.body.equipmentName;
     var clazzName = req.body.clazzName;
     var pupilName = req.body.pupilName;
+    var dateTo = req.body.dateTo;
 
     if (isValidString(equipmentName) &&
         isValidString(clazzName) &&
@@ -79,7 +80,7 @@ router.post("/", function (req, res) {
                     if (clazzes.length > 0) {
                         insertRental();
                     } else {
-                        req.models.create({name: clazzName}, function (error) {
+                        req.models.clazz.create({name: clazzName}, function (error) {
                             if (error) console.log(error);
                             insertRental();
                         });
