@@ -44,10 +44,18 @@ router.post("/", function (req, res) {
     var clazzName = req.body.clazzName;
     var pupilName = req.body.pupilName;
     var dateTo = req.body.dateTo;
+    var dateToDate = new Date(dateTo);
+
+    if(!dateTo || isValidString(dateTo) === false ||
+        !dateToDate){
+        dateToDate = new Date();
+        dateToDate = dateToDate.setTime(dateToDate.getTime() + 604800000);
+    }
 
     if (isValidString(equipmentName) &&
         isValidString(clazzName) &&
         isValidString(pupilName)
+
     ) {
         req.models.rental.find({equipmentName: equipmentName}, function (err, rental) {
             if (rental.length > 0) {
@@ -59,17 +67,14 @@ router.post("/", function (req, res) {
                         if (equipment.length <= 0) {
                             res.send({error: "Gerät existiert nicht!"});
                         } else {
-                            var dateTo = new Date();
-                            dateTo = dateTo.setTime(dateTo.getTime() + (1000 * 60 * 60 * 24 * 7 * 3));
                             req.models.rental.create({
                                 equipmentName: equipmentName,
                                 clazzName: clazzName,
                                 pupil: pupilName,
                                 date_from: new Date(),
-                                date_to: new Date(dateTo)
+                                date_to: dateToDate
                             }, function (err) {
                                 if (err) console.log(err);
-                                console.log("inserted");
                                 res.send({});
                             });
                         }

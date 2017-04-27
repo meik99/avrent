@@ -13,7 +13,8 @@ block content
                 input#pupil(type="text").mdl-textfield__input
                 label(for="pupil").mdl-textfield__label= "SchülerIn"
         div.mdl-cell.mdl-cell--12-col
-            select(id="clazzSelect", onchange="updateClazzname()").dropdown
+            select(id="clazzSelect", onchange="updateClazzname()", onclick="updateClazzname()").dropdown
+                option(value="")="Bitte auswählen"
                 each clazz in classes
                     option(value="#{clazz.name}")= clazz.name
         div.mdl-cell.mdl-cell--12-col
@@ -21,17 +22,18 @@ block content
                 input#clazz(type="text").mdl-textfield__input
                 label(for="clazz").mdl-textfield__label= "Klasse"
         div.mdl-cell.mdl-cell--12-col
-            div= "Reservieren bis"
+            div.date-label= "Reservieren bis"
             input#dateTo(readonly=true)
         div.mdl-cell.mdl-cell--12-col
             button(onclick="rent()").mdl-button.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent.mdl-button--raised= "Reservieren"
 
     script.
         (function () {
-            var inThreeWeeks = new Date((new Date().getTime() + 1000 * 60 * 60 * 24 * 7 * 3));
-
+            var datePreset = new Date((new Date().getTime() + 1000 * 60 * 60 * 24 * 7 * 1));
+            $("#dateTo").data("data-value", datePreset.getFullYear() + "/" + datePreset.getMonth() + "/" + datePreset.getDay());
             $("#dateTo").pickadate();
-            $("#dateTo").data("value", inThreeWeeks.getFullYear() + "/" + inThreeWeeks.getMonth() + "/" + inThreeWeeks.getDay());
+            $("#dateTo").data("data-value", datePreset.getFullYear() + "/" + datePreset.getMonth() + "/" + datePreset.getDay());
+
         })();
 
         function updateClazzname() {
@@ -39,7 +41,11 @@ block content
             var name = clazzSelect.options[clazzSelect.selectedIndex].value;
 
             $("#clazz").val(name);
-            $("#clazzDiv").addClass("is-dirty");
+
+            if(name && name.length > 0)
+                $("#clazzDiv").addClass("is-dirty");
+            else
+                $("#clazzDiv").removeClass("is-dirty");
         }
 
         function rent() {

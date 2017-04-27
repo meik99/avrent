@@ -47,7 +47,7 @@ div.mdl-cell.mdl-cell--12-col.mdl-layout--small-screen-only
                                     p= "Bis: -"
                 div.mdl-card__actions.mdl-card--border
                     if(e.borrowed.date_from <= -1)
-                        a.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
+                        a(href="/rentals/" + e.id).mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
                     else
                         a(onclick="removeRental('" + e.id + "')").mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Zurückerhalten"
     script.
