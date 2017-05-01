@@ -14,6 +14,7 @@ var rental = require("./rentals");
 
 module.exports = function(orm){
     var result = {
+
         connection_url: "mysql://" +
         mysql_config.user +
         ":" +
@@ -106,7 +107,7 @@ module.exports = function(orm){
                             if(err) console.log(err);
                         });
 
-
+                        this.models = models;
                         next();
                     });
                 });

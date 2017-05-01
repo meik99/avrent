@@ -10,8 +10,8 @@ module.exports = function(orm){
         options: {
             methods: {},
             validations: {
-                equipmentId: [orm.enforce.required()],
-                clazzId: [orm.enforce.required()],
+                equipmentName: [orm.enforce.required()],
+                clazzName: [orm.enforce.required()],
                 pupil: [orm.enforce.required()],
                 date_from: [orm.enforce.required()],
                 date_to: [orm.enforce.required()]
