@@ -17,3 +17,23 @@
     margin: 5px 20px;
     font-size: 16px;
 }
+
+#dateTo{
+    max-width: 100%;
+    width: 300px;
+    padding: 10px 5px;
+    font-size: 16px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
+.date-label{
+    max-width:100%;
+    width: 300px;
+    color: lightgray;
+    font-size: 16px;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
