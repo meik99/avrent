@@ -18,7 +18,8 @@ router.get('/', function (req, res, next) {
         {
             title: 'AVRent',
             equipments: result,
-            moment: moment
+            moment: moment,
+            authenticated: req.isAuthenticated()
         });
     });
 

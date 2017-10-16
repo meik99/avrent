@@ -1,0 +1,29 @@
+extends layout
+
+block content
+    div.mdl-grid
+        div.mdl-cell--4-offset-desktop.mdl-cell--4-col
+            div.mdl-card
+                h1.mdl-card__title="Login"
+                div.mdl-card__supporting-text
+                    p="Bitte geben Sie Ihre Anmeldedaten ein"
+                    div.mdl-textfield.mdl-textfield--floating-label.mdl-js-textfield
+                        input.mdl-textfield__input(id="username")
+                        label.mdl-textfield__label(for="username")="Benutzername"
+                    div.mdl-textfield.mdl-textfield--floating-label.mdl-js-textfield
+                        input.mdl-textfield__input(id="password" type="password")
+                        label.mdl-textfield__label(for="password")="Passwort"
+                    button.mdl-button.mdl-js-button.mdl-button--accent(onclick="login()")="Anmelden"
+
+    script.
+        function login(){
+            var username = $("#username").val();
+            var password = $("#password").val();
+            $.post("/login", {username: username, password: password}, function (data, status) {
+                if(data.success === true){
+                    window.location = "/";
+                }else{
+                    window.location = "/login";
+                }
+            });
+        }
