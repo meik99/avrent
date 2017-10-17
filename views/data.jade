@@ -21,10 +21,11 @@ div.mdl-cell.mdl-cell--6-col.mdl-layout--large-screen-only
                             p= "Von: -"
                             p= "Bis: -"
                     td
-                        if(e.borrowed.date_from <= -1)
-                            a(href="/rentals/" + e.id).mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
-                        else
-                            a(onclick="removeRental('" + e.id + "')").mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Zurückerhalten"
+                        if authenticated
+                            if(e.borrowed.date_from <= -1)
+                                a(href="/rentals/" + e.id).mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Verleihen"
+                            else
+                                a(onclick="removeRental('" + e.id + "')").mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect.mdl-button--accent= "Zurückerhalten"
 
 div.mdl-cell.mdl-cell--12-col.mdl-layout--small-screen-only
     each e in equipments

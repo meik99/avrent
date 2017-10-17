@@ -44,6 +44,12 @@ module.exports = function (app) {
         res.render("login");
     });
 
+    app.get("/logout", function (req, res) {
+        if(req.logout)
+            req.logout();
+        res.redirect("/");
+    });
+
     //, failureRedirect: "/login", successRedirect: "/"
     app.post("/login",
         function (req, res, next) {

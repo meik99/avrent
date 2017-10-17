@@ -28,6 +28,7 @@ html
     script(src="/datepicker/picker.date.js")
     script(src="/datepicker/picker.time.js")
     script(src="/datepicker/translations/de_DE.js")
+    script(src="/moment.js")
 
   body
     div.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
@@ -41,6 +42,9 @@ html
                     if authenticated
                         a.mdl-navigation__link(href="/equipment")= "Geräte verwalten"
                         a.mdl-navigation__link(href="/class")= "Klassen verwalten"
+                        a.mdl-navigation__link(href="/logout")= "Abmelden"
+                    else
+                        a.mdl-navigation__link(href="/login")= "Anmelden"
                 div.mdl-layout-spacer
 
         div.mdl-layout__drawer.mdl-layout--small-screen-only
@@ -51,6 +55,9 @@ html
                 if authenticated
                     a.mdl-navigation__link(href="/equipment")= "Geräte verwalten"
                     a.mdl-navigation__link(href="/class")= "Klassen verwalten"
+                    a.mdl-navigation__link(href="/logout")= "Abmelden"
+                else
+                    a.mdl-navigation__link(href="/login")= "Anmelden"
 
         main.mdl-layout__content
             div.page-content
